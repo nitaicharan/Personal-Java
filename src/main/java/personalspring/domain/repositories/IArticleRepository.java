@@ -6,4 +6,5 @@ import personalspring.domain.models.Article;
 
 public interface IArticleRepository {
     public List<Article> list();
+    public Article findBySlug(String slug);
 }
