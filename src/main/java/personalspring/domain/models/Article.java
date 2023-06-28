@@ -1,8 +1,10 @@
 package personalspring.domain.models;
 
-import lombok.Builder;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@Getter
+@SuperBuilder
 public class Article extends BaseModel {
     private String slug;
 }

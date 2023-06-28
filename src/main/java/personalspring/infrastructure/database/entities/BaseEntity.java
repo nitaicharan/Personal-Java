@@ -7,13 +7,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import personalspring.domain.models.BaseModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity<T> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    public abstract <T extends BaseModel> T toModel();
+    public abstract T toModel();
 }
