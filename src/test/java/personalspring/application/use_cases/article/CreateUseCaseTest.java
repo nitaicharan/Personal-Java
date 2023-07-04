@@ -25,13 +25,18 @@ class CreateUseCaseTest {
     @InjectMocks
     private CreateArticleUseCase useCase;
 
-    Faker faker = new Faker();
+    private Faker faker = new Faker();
 
     @Test
     void should_return_only_id_from_created_entity() {
-        UUID id = UUID.randomUUID();
-        String slug = faker.name().fullName().replace(' ', '-').toLowerCase();
-        when(repository.create(any(Article.class))).thenReturn(Article.builder().id(id).slug(slug).build());
+        var slug = faker.name().fullName().replace(' ', '-').toLowerCase();
+        var id = UUID.randomUUID();
+
+        when(repository.create(any(Article.class))).then(answer -> {
+            Article model = answer.getArgument(0);
+            model.setId(id);
+            return model;
+        });
 
         var result = useCase.execut(Article.builder().slug(slug).build());
         assertEquals(result, id);

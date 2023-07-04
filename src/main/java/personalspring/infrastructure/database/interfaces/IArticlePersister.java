@@ -9,4 +9,5 @@ import personalspring.infrastructure.database.entities.ArticleEntity;
 
 public interface IArticlePersister extends JpaRepository<ArticleEntity, UUID> {
     public Optional<ArticleEntity> findBySlug(String slug);
+    public Optional<ArticleEntity> findById(String slug);
 }
