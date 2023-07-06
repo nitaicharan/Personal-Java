@@ -64,12 +64,17 @@ class ApplicationTest {
         UUID id = UUID.randomUUID();
         when(findArticlesUseCase.execut(slug)).thenReturn(Article.builder().id(id).slug(slug).build());
 
+        var response = """
+            {"id":"%s","slug":"%s"}
+            """.formatted(id, slug).trim();
+
         RestAssuredMockMvc.given()
                 .auth().none()
                 .accept(MediaType.ALL_VALUE)
                 .when()
                 .get("/{slug}", slug)
                 .then()
+                .body(Matchers.equalTo(response))
                 .statusCode(200);
     }
 
