@@ -2,6 +2,7 @@ package personalspring.infrastructure.controllers.article;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.github.javafaker.Faker;
 
@@ -65,11 +67,11 @@ class ApplicationTest {
         when(findArticlesUseCase.execut(slug)).thenReturn(Article.builder().id(id).slug(slug).build());
 
         var response = """
-            {"id":"%s","slug":"%s"}
-            """.formatted(id, slug).trim();
+                    {"id":"%s","slug":"%s"}
+                """.formatted(id, slug).trim();
 
         RestAssuredMockMvc.given()
-                .auth().none()
+                .auth().authentication(id)
                 .accept(MediaType.ALL_VALUE)
                 .when()
                 .get("/{slug}", slug)
@@ -79,19 +81,19 @@ class ApplicationTest {
     }
 
     @Test
-    void should_return_location_header_with_created_id_entity() {
+    void should_return_location_header_with_created_id_entity() throws Exception {
         var id = UUID.randomUUID();
         String slug = faker.name().fullName().replace(' ', '-').toLowerCase();
+
         when(createArticleUseCase.execut(any(Article.class))).thenReturn(id);
 
-        RestAssuredMockMvc.given()
-                .accept(MediaType.ALL_VALUE)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Article.builder().slug(slug).build())
-                .when()
-                .post()
-                .then()
-                .statusCode(HttpStatus.CREATED.value())
-                .header("Location", Matchers.equalTo(id.toString()));
+        this.mockMvc.perform(
+                post("/articles")
+                        .content("{\"slug\": \"%s\"}".formatted(slug))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.header().exists("Location"))
+                .andExpect(MockMvcResultMatchers.header().string("Location",
+                        Matchers.equalTo("/articles/%s".formatted(id))));
     }
 }

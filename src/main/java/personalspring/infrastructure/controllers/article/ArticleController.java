@@ -30,7 +30,7 @@ public class ArticleController {
     ResponseEntity<Void> create(@RequestBody CreateArticleDto model) {
         var id = this.createArticleUseCase.execut(model.toModel());
 
-        var location = URI.create(id.toString());
+        var location = URI.create("/articles/%s".formatted(id.toString()));
         return ResponseEntity.created(location).build();
     }
 
