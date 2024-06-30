@@ -2,7 +2,7 @@ package personalspring.application.dto.article;
 import jakarta.validation.constraints.NotNull;
 import personalspring.domain.models.Article;
 
-public class CreateArticleDto {
+public class CreateDto {
     @NotNull
     private String slug;
 

@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import personalspring.application.dto.article.CreateArticleDto;
-import personalspring.application.use_cases.article.CreateArticleUseCase;
-import personalspring.application.use_cases.article.FindArticlesUseCase;
-import personalspring.application.use_cases.article.ListArticlesUseCase;
+import personalspring.application.dto.article.CreateDto;
+import personalspring.application.use_cases.article.CreateUseCase;
+import personalspring.application.use_cases.article.FindUseCase;
+import personalspring.application.use_cases.article.ListUseCase;
 import personalspring.domain.models.Article;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("articles")
 public class ArticleController {
-  private final ListArticlesUseCase listArticlesUseCase;
-  private final FindArticlesUseCase findArticlesUseCase;
-  private final CreateArticleUseCase createArticleUseCase;
+  private final ListUseCase listArticlesUseCase;
+  private final FindUseCase findArticlesUseCase;
+  private final CreateUseCase createArticleUseCase;
 
   @PostMapping
-  ResponseEntity<Void> create(@RequestBody CreateArticleDto model) {
+  ResponseEntity<Void> create(@RequestBody CreateDto model) {
     var id = this.createArticleUseCase.execute(model.toModel());
 
     var location = URI.create("/articles/%s".formatted(id.toString()));

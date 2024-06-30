@@ -1,7 +1,5 @@
 package personalspring.application.use_cases.article;
 
-import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,16 +10,16 @@ import personalspring.domain.repositories.IArticleRepository;
 
 @Service
 @AllArgsConstructor
-public class CreateArticleUseCase {
+public class FindUseCase {
     private final IArticleRepository repository;
 
-    public UUID execute(Article model) {
-        var entity = repository.create(model);
+    public Article execute(String slug) throws ResponseStatusException {
+        var model = this.repository.findBySlug(slug);
 
-        if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
+        if (model == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found!");
         }
 
-        return entity.getId();
+        return model;
     }
 }

@@ -18,12 +18,12 @@ import com.github.javafaker.Faker;
 import personalspring.domain.models.Article;
 import personalspring.domain.repositories.IArticleRepository;
 
-class FindArticlesUseCaseTest {
+class FindUseCaseTest {
     @Mock
     private IArticleRepository repository;
 
     @InjectMocks
-    private FindArticlesUseCase useCase;
+    private FindUseCase useCase;
 
     private Faker faker = new Faker();
 

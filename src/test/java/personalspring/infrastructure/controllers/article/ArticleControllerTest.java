@@ -21,21 +21,21 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.github.javafaker.Faker;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import personalspring.application.use_cases.article.CreateArticleUseCase;
-import personalspring.application.use_cases.article.FindArticlesUseCase;
-import personalspring.application.use_cases.article.ListArticlesUseCase;
+import personalspring.application.use_cases.article.CreateUseCase;
+import personalspring.application.use_cases.article.FindUseCase;
+import personalspring.application.use_cases.article.ListUseCase;
 import personalspring.domain.models.Article;
 
 @WebMvcTest(ArticleController.class)
 class ApplicationTest {
   @MockBean
-  private ListArticlesUseCase listArticleUseCase;
+  private ListUseCase listArticleUseCase;
 
   @MockBean
-  private FindArticlesUseCase findArticlesUseCase;
+  private FindUseCase findArticlesUseCase;
 
   @MockBean
-  private CreateArticleUseCase createArticleUseCase;
+  private CreateUseCase createArticleUseCase;
 
   @Autowired
   private MockMvc mockMvc;

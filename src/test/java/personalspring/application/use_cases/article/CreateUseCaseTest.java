@@ -23,7 +23,7 @@ class CreateUseCaseTest {
     private IArticleRepository repository;
 
     @InjectMocks
-    private CreateArticleUseCase useCase;
+    private CreateUseCase useCase;
 
     private Faker faker = new Faker();
 
