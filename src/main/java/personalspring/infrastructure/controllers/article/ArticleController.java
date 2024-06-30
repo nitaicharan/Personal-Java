@@ -22,26 +22,26 @@ import personalspring.domain.models.Article;
 @RestController
 @RequestMapping("articles")
 public class ArticleController {
-    private final ListArticlesUseCase listArticlesUseCase;
-    private final FindArticlesUseCase findArticlesUseCase;
-    private final CreateArticleUseCase createArticleUseCase;
+  private final ListArticlesUseCase listArticlesUseCase;
+  private final FindArticlesUseCase findArticlesUseCase;
+  private final CreateArticleUseCase createArticleUseCase;
 
-    @PostMapping
-    ResponseEntity<Void> create(@RequestBody CreateArticleDto model) {
-        var id = this.createArticleUseCase.execut(model.toModel());
+  @PostMapping
+  ResponseEntity<Void> create(@RequestBody CreateArticleDto model) {
+    var id = this.createArticleUseCase.execute(model.toModel());
 
-        var location = URI.create("/articles/%s".formatted(id.toString()));
-        return ResponseEntity.created(location).build();
-    }
+    var location = URI.create("/articles/%s".formatted(id.toString()));
+    return ResponseEntity.created(location).build();
+  }
 
-    @GetMapping
-    List<Article> list() {
-        return this.listArticlesUseCase.execut();
-    }
+  @GetMapping
+  List<Article> list() {
+    return this.listArticlesUseCase.execute();
+  }
 
-    @GetMapping("/{slug}")
-    Article find(@PathVariable("slug") String slug) {
-        return this.findArticlesUseCase.execut(slug);
-    }
+  @GetMapping("/{slug}")
+  Article find(@PathVariable("slug") String slug) {
+    return this.findArticlesUseCase.execute(slug);
+  }
 
 }
