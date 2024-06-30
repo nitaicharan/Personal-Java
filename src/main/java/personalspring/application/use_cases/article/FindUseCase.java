@@ -11,15 +11,15 @@ import personalspring.domain.repositories.IArticleRepository;
 @Service
 @AllArgsConstructor
 public class FindUseCase {
-    private final IArticleRepository repository;
+  private final IArticleRepository repository;
 
-    public Article execute(String slug) throws ResponseStatusException {
-        var model = this.repository.findBySlug(slug);
+  public Article execute(String slug) throws ResponseStatusException {
+    var model = this.repository.findBySlug(slug);
 
-        if (model == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found!");
-        }
-
-        return model;
+    if (model == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found!");
     }
+
+    return model;
+  }
 }

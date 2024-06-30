@@ -26,7 +26,7 @@ import personalspring.application.use_cases.article.FindUseCase;
 import personalspring.application.use_cases.article.ListUseCase;
 import personalspring.domain.models.Article;
 
-@WebMvcTest(ArticleController.class)
+@WebMvcTest(CreateController.class)
 class ApplicationTest {
   @MockBean
   private ListUseCase listArticleUseCase;
