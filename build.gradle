@@ -1,19 +1,21 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.1.0'
-	id 'io.spring.dependency-management' version '1.1.0'
-	id 'com.adarshr.test-logger' version '3.2.0'
+	id 'org.springframework.boot' version '3.3.1'
+	id 'io.spring.dependency-management' version '1.1.5'
 }
 
+group = 'com.personalspring'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
 }
 
 configurations {
 	compileOnly {
-        extendsFrom annotationProcessor
+		extendsFrom annotationProcessor
 	}
 }
 
@@ -22,41 +24,46 @@ repositories {
 }
 
 dependencies {
-        implementation 'org.postgresql:postgresql'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'com.github.javafaker:javafaker:1.0.2'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'io.rest-assured:rest-assured'
-        testImplementation 'io.rest-assured:spring-mock-mvc'
-        testImplementation 'com.h2database:h2'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation ('com.github.javafaker:javafaker:1.0.2') { exclude module: 'org.yaml' }
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.26'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'io.rest-assured:spring-mock-mvc'
+    testImplementation 'com.h2database:h2'
 }
 
 tasks.named('test') {
         useJUnitPlatform()
 }
 
-testlogger {
-    theme 'mocha'
-    showExceptions true
-    showStackTraces true
-    showFullStackTraces false
-    showCauses true
-    slowThreshold 2000
-    showSummary true
-    showSimpleNames false
-    showPassed true
-    showSkipped true
-    showFailed true
-    showOnlySlow false
-    showStandardStreams true
-    showPassedStandardStreams true
-    showSkippedStandardStreams true
-    showFailedStandardStreams true
-    logLevel 'lifecycle'
+// testlogger {
+//     theme 'mocha'
+//     showExceptions true
+//     showStackTraces true
+//     showFullStackTraces false
+//     showCauses true
+//     slowThreshold 2000
+//     showSummary true
+//     showSimpleNames false
+//     showPassed true
+//     showSkipped true
+//     showFailed true
+//     showOnlySlow false
+//     showStandardStreams true
+//     showPassedStandardStreams true
+//     showSkippedStandardStreams true
+//     showFailedStandardStreams true
+//     logLevel 'lifecycle'
+// }
+
+bootRun {
+    jvmArgs = ["-Dspring.output.ansi.enabled=ALWAYS"]
 }
