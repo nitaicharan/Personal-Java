@@ -13,7 +13,7 @@ import personalspring.domain.repositories.IArticleRepository;
 public class FindArticlesUseCase {
     private final IArticleRepository repository;
 
-    public Article execut(String slug) throws ResponseStatusException {
+    public Article execute(String slug) throws ResponseStatusException {
         var model = this.repository.findBySlug(slug);
 
         if (model == null) {

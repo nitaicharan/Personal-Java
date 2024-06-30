@@ -37,7 +37,7 @@ class FindArticlesUseCaseTest {
         var slug = faker.name().fullName().replace(' ', '-').toLowerCase();
         when(repository.findBySlug(slug)).thenReturn(Article.builder().slug(slug).build());
 
-        var result = useCase.execut(slug);
+        var result = useCase.execute(slug);
         assertEquals(result.getSlug(), slug);
     }
 
@@ -46,7 +46,7 @@ class FindArticlesUseCaseTest {
         when(repository.findBySlug(anyString())).thenReturn(null);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            useCase.execut("");
+            useCase.execute("");
         });
 
         ResponseStatusException exeptionExpected = new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found!");

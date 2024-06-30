@@ -13,7 +13,7 @@ import personalspring.domain.repositories.IArticleRepository;
 public class ListArticlesUseCase {
     private final IArticleRepository repository;
 
-    public List<Article> execut() {
+    public List<Article> execute() {
         return this.repository.list();
     }
 }

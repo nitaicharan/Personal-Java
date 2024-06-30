@@ -38,7 +38,7 @@ class CreateUseCaseTest {
             return model;
         });
 
-        var result = useCase.execut(Article.builder().slug(slug).build());
+        var result = useCase.execute(Article.builder().slug(slug).build());
         assertEquals(result, id);
     }
 

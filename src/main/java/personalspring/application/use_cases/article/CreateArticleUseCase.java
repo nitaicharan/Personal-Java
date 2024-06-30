@@ -15,7 +15,7 @@ import personalspring.domain.repositories.IArticleRepository;
 public class CreateArticleUseCase {
     private final IArticleRepository repository;
 
-    public UUID execut(Article model) {
+    public UUID execute(Article model) {
         var entity = repository.create(model);
 
         if (entity == null) {
