@@ -19,10 +19,12 @@ public class CreateController {
   private final CreateUseCase useCase;
 
   @PostMapping
-  public ResponseEntity<Void> create(@RequestBody CreateDto model) {
-    var id = this.useCase.execute(model.toModel());
+  public ResponseEntity<Void> create(@RequestBody CreateDto dto) {
 
-    var location = URI.create("/articles/%s".formatted(id.toString()));
+    var model = dto.toModel();
+    var slug = this.useCase.execute(model);
+
+    var location = URI.create("/articles/%s".formatted(slug.toString()));
     return ResponseEntity.created(location).build();
   }
 }

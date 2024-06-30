@@ -13,15 +13,15 @@ import personalspring.domain.repositories.IArticleRepository;
 @Service
 @AllArgsConstructor
 public class CreateUseCase {
-    private final IArticleRepository repository;
+  private final IArticleRepository repository;
 
-    public UUID execute(Article model) {
-        var entity = repository.create(model);
+  public String execute(Article model) {
+    var entity = repository.create(model);
 
-        if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
-        }
-
-        return entity.getId();
+    if (entity == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
     }
+
+    return entity.getSlug();
+  }
 }

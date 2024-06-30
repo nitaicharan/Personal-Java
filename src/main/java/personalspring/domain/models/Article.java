@@ -1,12 +1,12 @@
 package personalspring.domain.models;
 
-import lombok.Getter;
-import lombok.ToString;
+import jakarta.persistence.Column;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@ToString
+@Data
 @SuperBuilder
 public class Article extends BaseModel {
+  @Column(nullable = false)
   private String slug;
 }
