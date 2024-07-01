@@ -1,17 +1,39 @@
 package personalspring.application.dto.article;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 import personalspring.domain.models.Article;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateDto {
-  @NotNull
+
+  @NotBlank
+  private String body;
+
+  @NotBlank
+  private String description;
+
+  @NotBlank
   private String slug;
 
+  // @NotEmpty
+  // private String[] tagList;
+
+  @NotBlank
+  private String title;
+
   public Article toModel() {
-    return Article.builder().slug(this.slug).build();
+    return Article.builder()
+        .body(this.body)
+        .description(this.description)
+        .slug(this.slug)
+        .title(this.title)
+        .build();
   }
 }

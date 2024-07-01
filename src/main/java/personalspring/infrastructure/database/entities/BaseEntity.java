@@ -14,9 +14,9 @@ import lombok.Setter;
 @Getter
 @MappedSuperclass
 public abstract class BaseEntity<T> implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    public abstract T toModel();
+  public abstract T toModel();
 }

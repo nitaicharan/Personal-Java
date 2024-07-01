@@ -1,12 +1,17 @@
 package personalspring.domain.models;
 
-import jakarta.persistence.Column;
-import lombok.Data;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
 @SuperBuilder
 public class Article extends BaseModel {
-  @Column(nullable = false)
   private String slug;
+  private String body;
+  private String description;
+  private boolean favorited;
+  private int favoritesCount;
+  private String title;
+  private String createdAt;
+  private String updatedAt;
 }

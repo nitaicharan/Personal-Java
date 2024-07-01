@@ -20,7 +20,6 @@ public class CreateController {
 
   @PostMapping
   public ResponseEntity<Void> create(@RequestBody CreateDto dto) {
-
     var model = dto.toModel();
     var slug = this.useCase.execute(model);
 
