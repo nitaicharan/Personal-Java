@@ -19,7 +19,7 @@ public class CreateController {
   private final CreateUseCase useCase;
 
   @PostMapping
-  public ResponseEntity<Void> create(@RequestBody CreateDto dto) {
+  public ResponseEntity<Void> handler(@RequestBody CreateDto dto) {
     var model = dto.toModel();
     var slug = this.useCase.execute(model);
 

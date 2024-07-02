@@ -16,7 +16,7 @@ public class FindController {
   private final FindUseCase useCase;
 
   @GetMapping("/{slug}")
-  public Article find(@PathVariable("slug") String slug) {
+  public Article handler(@PathVariable("slug") String slug) {
     return this.useCase.execute(slug);
   }
 

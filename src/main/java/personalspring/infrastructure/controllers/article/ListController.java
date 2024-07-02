@@ -17,7 +17,7 @@ public class ListController {
   private final ListUseCase useCase;
 
   @GetMapping
-  public List<Article> list() {
+  public List<Article> handler() {
     return this.useCase.execute();
   }
 }
