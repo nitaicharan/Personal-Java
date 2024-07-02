@@ -7,12 +7,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import personalspring.domain.models.Article;
 
-@Setter
-@ToString
+@Getter
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Entity(name = "articles")
 public class ArticleEntity extends BaseEntity<Article> {
@@ -43,14 +43,14 @@ public class ArticleEntity extends BaseEntity<Article> {
 
   public ArticleEntity(Article model) {
     this.setId(model.getId());
-    this.setSlug(model.getSlug());
-    this.setBody(model.getBody());
-    this.setDescription(model.getDescription());
-    this.setFavorited(model.isFavorited());
-    this.setFavoritesCount(model.getFavoritesCount());
-    this.setTitle(model.getTitle());
-    this.setCreatedAt(model.getCreatedAt());
-    this.setUpdatedAt(model.getUpdatedAt());
+    this.slug = model.getSlug();
+    this.body = model.getBody();
+    this.description = model.getDescription();
+    this.favorited = model.isFavorited();
+    this.favoritesCount = model.getFavoritesCount();
+    this.title = model.getTitle();
+    this.createdAt = model.getCreatedAt();
+    this.updatedAt = model.getUpdatedAt();
   }
 
   @Override

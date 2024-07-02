@@ -34,4 +34,9 @@ public class ArticleRepositoryImp implements IArticleRepository {
     return persister.findBySlug(slug).map(ArticleEntity::toModel).orElse(null);
   }
 
+  @Override
+  public void deleteBySlug(String slug) {
+    persister.deleteBySlug(slug);
+  }
+
 }
