@@ -19,27 +19,24 @@ import personalspring.domain.repositories.IArticleRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUseCaseTest {
-    @Mock
-    private IArticleRepository repository;
+  @Mock
+  private IArticleRepository repository;
 
-    @InjectMocks
-    private CreateUseCase useCase;
+  @InjectMocks
+  private CreateUseCase useCase;
 
-    private Faker faker = new Faker();
+  private Faker faker = new Faker();
 
-    @Test
-    void should_return_only_id_from_created_entity() {
-        var slug = faker.name().fullName().replace(' ', '-').toLowerCase();
-        var id = UUID.randomUUID();
+  @Test
+  void should_return_only_id_from_created_entity() {
+    var slug = faker.name().fullName().replace(' ', '-').toLowerCase();
 
-        when(repository.create(any(Article.class))).then(answer -> {
-            Article model = answer.getArgument(0);
-            model.setId(id);
-            return model;
-        });
+    when(repository.create(any(Article.class))).then(answer -> {
+      return Article.builder().slug(slug).build();
+    });
 
-        var result = useCase.execute(Article.builder().slug(slug).build());
-        assertEquals(result, id);
-    }
+    var result = useCase.execute(Article.builder().slug(slug).build());
+    assertEquals(slug, result);
+  }
 
 }

@@ -9,7 +9,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +23,8 @@ import personalspring.application.use_cases.article.FindUseCase;
 import personalspring.application.use_cases.article.ListUseCase;
 import personalspring.domain.models.Article;
 
-@WebMvcTest(CreateController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class FindControllerTest {
   @MockBean
   private ListUseCase listArticleUseCase;
@@ -48,23 +50,26 @@ public class FindControllerTest {
   void should_allow_find_article_whiout_authentication() {
     String slug = faker.name().fullName().replace(' ', '-').toLowerCase();
     UUID id = UUID.randomUUID();
-    when(findArticlesUseCase.execute(slug)).thenReturn(Article.builder().id(id).slug(slug).build());
+    var extected = Article.builder().id(id).slug(slug).build();
+    when(findArticlesUseCase.execute(slug)).thenReturn(extected);
 
     var response = """
         {"id":"%s","slug":"%s"}
         """.formatted(id, slug).trim();
 
-    // RestAssuredMockMvc.given()
-    //     .auth().authentication(id)
-    //     .accept(MediaType.ALL_VALUE)
-    //     .when()
-    //     .get("/{slug}", slug)
-    //     .then()
-    //     .body(Matchers.equalTo(response))
-    //     .statusCode(200)
-    //     .log().all()
-    //     .extract()
-    //     .response();
+    RestAssuredMockMvc.given()
+        // .auth().authentication(id)
+        .accept(MediaType.ALL_VALUE)
+        .when()
+        .get("/{slug}", slug)
+        .then()
+        .body(Matchers.allOf(
+            Matchers.containsString("\"id\":\"" + id.toString() + "\""),
+            Matchers.containsString("\"slug\":\"" + slug + "\"")))
+        .statusCode(200)
+        .log().all()
+        .extract()
+        .response();
 
   }
 }
