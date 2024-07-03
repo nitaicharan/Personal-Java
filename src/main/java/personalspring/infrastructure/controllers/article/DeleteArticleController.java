@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import personalspring.application.use_cases.article.DeleteUseCase;
+import personalspring.application.use_cases.article.DeleteArticleUseCase;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("articles")
-public class DeleteController {
-  private final DeleteUseCase useCase;
+public class DeleteArticleController {
+  private final DeleteArticleUseCase useCase;
 
   @DeleteMapping("/{slug}")
   public ResponseEntity<Void> handler(@PathVariable String slug) {

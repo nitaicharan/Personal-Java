@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import personalspring.application.dto.article.CreateDto;
-import personalspring.application.use_cases.article.CreateUseCase;
+import personalspring.application.use_cases.article.CreateArticleUseCase;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("articles")
-public class CreateController {
-  private final CreateUseCase useCase;
+public class CreateArticleController {
+  private final CreateArticleUseCase useCase;
 
   @PostMapping
   public ResponseEntity<Void> handler(@RequestBody CreateDto dto) {

@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.github.javafaker.Faker;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import personalspring.application.use_cases.article.CreateUseCase;
+import personalspring.application.use_cases.article.CreateArticleUseCase;
 import personalspring.domain.models.Article;
 
 @SpringBootTest
@@ -28,7 +28,7 @@ import personalspring.domain.models.Article;
 public class CreateControllerTest {
 
   @MockBean
-  private CreateUseCase createArticleUseCase;
+  private CreateArticleUseCase createArticleUseCase;
 
   @Autowired
   private MockMvc mockMvc;

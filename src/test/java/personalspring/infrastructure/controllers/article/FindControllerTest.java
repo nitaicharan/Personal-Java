@@ -18,22 +18,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.github.javafaker.Faker;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import personalspring.application.use_cases.article.CreateUseCase;
-import personalspring.application.use_cases.article.FindUseCase;
-import personalspring.application.use_cases.article.ListUseCase;
+import personalspring.application.use_cases.article.CreateArticleUseCase;
+import personalspring.application.use_cases.article.FindArticleUseCase;
+import personalspring.application.use_cases.article.ListArticleUseCase;
 import personalspring.domain.models.Article;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class FindControllerTest {
   @MockBean
-  private ListUseCase listArticleUseCase;
+  private ListArticleUseCase listArticleUseCase;
 
   @MockBean
-  private FindUseCase findArticlesUseCase;
+  private FindArticleUseCase findArticlesUseCase;
 
   @MockBean
-  private CreateUseCase createArticleUseCase;
+  private CreateArticleUseCase createArticleUseCase;
 
   @Autowired
   private MockMvc mockMvc;

@@ -22,7 +22,7 @@ class DeleteUseCaseTest {
   private IArticleRepository repository;
 
   @InjectMocks
-  private DeleteUseCase useCase;
+  private DeleteArticleUseCase useCase;
 
   private Faker faker = new Faker();
 

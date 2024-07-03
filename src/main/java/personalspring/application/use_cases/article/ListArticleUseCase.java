@@ -10,7 +10,7 @@ import personalspring.domain.repositories.IArticleRepository;
 
 @Service
 @AllArgsConstructor
-public class ListUseCase {
+public class ListArticleUseCase {
     private final IArticleRepository repository;
 
     public List<Article> execute() {

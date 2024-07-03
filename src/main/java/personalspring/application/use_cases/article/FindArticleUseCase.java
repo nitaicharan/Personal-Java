@@ -10,7 +10,7 @@ import personalspring.domain.repositories.IArticleRepository;
 
 @Service
 @AllArgsConstructor
-public class FindUseCase {
+public class FindArticleUseCase {
   private final IArticleRepository repository;
 
   public Article execute(String slug) throws ResponseStatusException {

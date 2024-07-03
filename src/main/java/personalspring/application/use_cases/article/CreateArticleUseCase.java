@@ -5,20 +5,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.AllArgsConstructor;
+import personalspring.domain.models.Article;
 import personalspring.domain.repositories.IArticleRepository;
 
 @Service
 @AllArgsConstructor
-public class DeleteUseCase {
+public class CreateArticleUseCase {
   private final IArticleRepository repository;
 
-  public void execute(String slug) throws ResponseStatusException {
-    var model = this.repository.findBySlug(slug);
+  public String execute(Article model) {
+    var entity = repository.create(model);
 
-    if (model == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found!");
+    if (entity == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
     }
 
-    this.repository.deleteBySlug(slug);
+    return entity.getSlug();
   }
 }

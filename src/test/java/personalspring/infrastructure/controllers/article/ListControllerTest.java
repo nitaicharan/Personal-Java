@@ -11,21 +11,21 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import personalspring.application.use_cases.article.CreateUseCase;
-import personalspring.application.use_cases.article.FindUseCase;
-import personalspring.application.use_cases.article.ListUseCase;
+import personalspring.application.use_cases.article.CreateArticleUseCase;
+import personalspring.application.use_cases.article.FindArticleUseCase;
+import personalspring.application.use_cases.article.ListArticleUseCase;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ListControllerTest {
   @MockBean
-  private ListUseCase listArticleUseCase;
+  private ListArticleUseCase listArticleUseCase;
 
   @MockBean
-  private FindUseCase findArticlesUseCase;
+  private FindArticleUseCase findArticlesUseCase;
 
   @MockBean
-  private CreateUseCase createArticleUseCase;
+  private CreateArticleUseCase createArticleUseCase;
 
   @Autowired
   private MockMvc mockMvc;
