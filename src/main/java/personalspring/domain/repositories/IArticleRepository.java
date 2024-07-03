@@ -9,7 +9,7 @@ public interface IArticleRepository {
 
   public List<Article> list();
 
-  public Article findBySlug(String slug);
+  public Article findBySlug(String identifier);
 
-  public void deleteBySlug(String slug);
+  public void deleteBySlug(String identifier);
 }
