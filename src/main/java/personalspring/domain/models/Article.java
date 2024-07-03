@@ -12,6 +12,4 @@ public class Article extends BaseModel {
   private boolean favorited;
   private int favoritesCount;
   private String title;
-  private String createdAt;
-  private String updatedAt;
 }

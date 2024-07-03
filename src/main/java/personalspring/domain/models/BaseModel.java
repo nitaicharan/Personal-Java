@@ -9,4 +9,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class BaseModel {
   private UUID id;
+  private String createdAt;
+  private String updatedAt;
 }

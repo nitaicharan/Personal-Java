@@ -35,12 +35,6 @@ public class ArticleEntity extends BaseEntity<Article> {
   @Column(nullable = false)
   private String title;
 
-  @CreatedDate
-  private String createdAt;
-
-  @LastModifiedDate
-  private String updatedAt;
-
   public ArticleEntity(Article model) {
     this.setId(model.getId());
     this.slug = model.getSlug();
@@ -49,8 +43,8 @@ public class ArticleEntity extends BaseEntity<Article> {
     this.favorited = model.isFavorited();
     this.favoritesCount = model.getFavoritesCount();
     this.title = model.getTitle();
-    this.createdAt = model.getCreatedAt();
-    this.updatedAt = model.getUpdatedAt();
+    this.setCreatedAt(model.getCreatedAt());
+    this.setUpdatedAt(model.getUpdatedAt());
   }
 
   @Override
@@ -63,8 +57,8 @@ public class ArticleEntity extends BaseEntity<Article> {
         .favorited(this.favorited)
         .favoritesCount(this.favoritesCount)
         .title(this.title)
-        .createdAt(this.createdAt)
-        .updatedAt(this.updatedAt)
+        .createdAt(this.getCreatedAt())
+        .updatedAt(this.getUpdatedAt())
         .build();
   }
 
