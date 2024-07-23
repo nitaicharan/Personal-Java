@@ -1,10 +1,8 @@
 package personalspring.application.use_cases.users;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import personalspring.domain.models.User;
 import personalspring.domain.repositories.IUserRepository;
 

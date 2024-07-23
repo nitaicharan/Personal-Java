@@ -12,5 +12,4 @@ public class SigninApiDelegateImpl implements SigninApiDelegate {
   public ResponseEntity<Void> postSignin(SignIn signIn) {
     return SigninApiDelegate.super.postSignin(signIn);
   }
-
 }

@@ -13,20 +13,13 @@ import personalspring.domain.models.User;
 @AllArgsConstructor
 public class CreateUserDto {
 
-  @NotBlank
-  private String username;
+  @NotBlank private String username;
 
-  @NotBlank
-  private String email;
+  @NotBlank private String email;
 
-  @NotBlank
-  private String password;
+  @NotBlank private String password;
 
   public User toModel() {
-    return User.builder()
-        .username(this.username)
-        .email(this.email)
-        .password(this.password)
-        .build();
+    return User.builder().username(this.username).email(this.email).password(this.password).build();
   }
 }

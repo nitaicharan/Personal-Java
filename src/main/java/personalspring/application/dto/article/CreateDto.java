@@ -13,20 +13,16 @@ import personalspring.domain.models.Article;
 @AllArgsConstructor
 public class CreateDto {
 
-  @NotBlank
-  private String body;
+  @NotBlank private String body;
 
-  @NotBlank
-  private String description;
+  @NotBlank private String description;
 
-  @NotBlank
-  private String slug;
+  @NotBlank private String slug;
 
   // @NotEmpty
   // private String[] tagList;
 
-  @NotBlank
-  private String title;
+  @NotBlank private String title;
 
   public Article toModel() {
     return Article.builder()

@@ -34,13 +34,9 @@ tasks.named('test') {
 
 openApiGenerate {
     inputSpec = "$projectDir/src/main/resources/api/openapi.yaml"
-    outputDir.set("$buildDir/generated/openapi")
     generatorName = "spring"
     apiPackage = "personalspring.infrastructure.api"
     modelPackage = "personalspring.infrastructure.dto"
-    // generateApis = true
-    generateApiTests = true
-    generateModelTests = true
     configOptions = [
         useJakartaEe     : 'true',
         delegatePattern  : 'true',
@@ -59,7 +55,7 @@ springBoot {
 sourceSets {
     main {
         java {
-            srcDir "$buildDir/generated/openapi/src/main/java"
+            srcDir "$buildDir/generated/openapi/src/main/kotlin"
         }
     }
 }

@@ -1,7 +1,6 @@
 package personalspring.domain.models;
 
 import java.util.UUID;
-
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

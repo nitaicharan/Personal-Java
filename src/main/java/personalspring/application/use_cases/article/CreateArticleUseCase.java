@@ -11,18 +11,15 @@ import personalspring.domain.repositories.IArticleRepository;
 @AllArgsConstructor
 public class CreateArticleUseCase {
 
-    private final IArticleRepository repository;
+  private final IArticleRepository repository;
 
-    public String execute(Article model) {
-        var entity = repository.create(model);
+  public String execute(Article model) {
+    var entity = repository.create(model);
 
-        if (entity == null) {
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Actor Not Found"
-            );
-        }
-
-        return entity.getSlug();
+    if (entity == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
     }
+
+    return entity.getSlug();
+  }
 }

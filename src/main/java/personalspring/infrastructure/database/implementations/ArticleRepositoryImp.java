@@ -1,10 +1,8 @@
 package personalspring.infrastructure.database.implementations;
 
 import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import personalspring.domain.models.Article;
 import personalspring.domain.repositories.IArticleRepository;
 import personalspring.infrastructure.database.entities.ArticleEntity;
@@ -38,5 +36,4 @@ public class ArticleRepositoryImp implements IArticleRepository {
   public void deleteBySlug(String slug) {
     persister.deleteBySlug(slug);
   }
-
 }

@@ -1,11 +1,9 @@
 package personalspring.infrastructure.delegators;
 
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import personalspring.infrastructure.api.CommentsApiDelegate;
 
 @Service
 @AllArgsConstructor
-public class CommentsApiDelegateImpl implements CommentsApiDelegate {
-}
+public class CommentsApiDelegateImpl implements CommentsApiDelegate {}

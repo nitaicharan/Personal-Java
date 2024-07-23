@@ -1,12 +1,10 @@
-package personalspring.infrastructure.controllers.article;
+package personalspring.infrastructure.controllers.users;
 
 import java.util.List;
-
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.AllArgsConstructor;
 import personalspring.application.use_cases.users.ListUserUseCase;
 import personalspring.domain.models.User;
 

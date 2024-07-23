@@ -1,7 +1,6 @@
 package personalspring.domain.repositories;
 
 import java.util.List;
-
 import personalspring.domain.models.User;
 
 public interface IUserRepository {

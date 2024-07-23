@@ -1,10 +1,8 @@
 package personalspring.infrastructure.database.implementations;
 
 import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import personalspring.domain.models.User;
 import personalspring.domain.repositories.IUserRepository;
 import personalspring.infrastructure.database.entities.UserEntity;
@@ -38,5 +36,4 @@ public class UserRepositoryImp implements IUserRepository {
   public void deleteByUsername(String identifier) {
     persister.deleteByUsername(identifier);
   }
-
 }

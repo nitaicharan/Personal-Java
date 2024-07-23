@@ -1,11 +1,9 @@
 package personalspring.infrastructure.delegators;
 
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import personalspring.infrastructure.api.UsersApiDelegate;
 
 @Service
 @AllArgsConstructor
-public class UsersApiDelegateImpl implements UsersApiDelegate {
-}
+public class UsersApiDelegateImpl implements UsersApiDelegate {}
