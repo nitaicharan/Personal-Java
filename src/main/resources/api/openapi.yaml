@@ -226,8 +226,42 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              x-examples:
+                Example 1:
+                  name: John Doe
+                  username: johndoe
+                  email: johndoe@example.com
+                  bio: A software developer with a passion for coding and technology.
+                  image: 'https://example.com/johndoe.jpg'
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                username:
+                  type: string
+                  example: johndoe
+                email:
+                  type: string
+                  example: johndoe@example.com
+                bio:
+                  type: string
+                  example: A software developer with a passion for coding and technology.
+                image:
+                  type: string
+                  example: 'https://example.com/johndoe.jpg'
+                password:
+                  type: string
+                  x-stoplight:
+                    id: 3vuourcim10ae
+                  example: P@ssw0rd*1
+              required:
+                - name
+                - username
+                - email
+                - password
             examples: {}
+        description: ''
       description: Create resource
     get:
       summary: ''

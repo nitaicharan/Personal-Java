@@ -20,6 +20,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:[2.6.0,2.7.0)'
     implementation 'org.openapitools:jackson-databind-nullable:[0.2.0,0.3.0)'
     implementation 'jakarta.persistence:jakarta.persistence-api'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql'
     implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
     implementation 'jakarta.validation:jakarta.validation-api'
     implementation 'jakarta.ws.rs:jakarta.ws.rs-api'
@@ -38,10 +40,13 @@ openApiGenerate {
     generatorName = "spring"
     apiPackage = "personalspring.infrastructure.api"
     modelPackage = "personalspring.infrastructure.dto"
+    modelNameSuffix = "Dto"
     configOptions = [
         useJakartaEe     : 'true',
+        generateBuilders : 'true',
         delegatePattern  : 'true',
-        serializableModel: 'true'
+        serializableModel: 'true',
+        modelNameSuffix: 'true'
     ]
 }
 

@@ -1,5 +1,6 @@
 package personalspring.domain.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -8,6 +9,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class BaseModel {
   private UUID id;
-  private String createdAt;
-  private String updatedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 }

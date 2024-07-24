@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 public class User extends BaseModel {
+  private String name;
   private String username;
   private String email;
   private String token;

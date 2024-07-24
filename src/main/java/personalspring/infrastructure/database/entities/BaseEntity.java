@@ -5,6 +5,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,9 +20,9 @@ public abstract class BaseEntity<T> implements Serializable {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @CreatedDate private String createdAt;
+  @CreatedDate private LocalDateTime createdAt;
 
-  @LastModifiedDate private String updatedAt;
+  @LastModifiedDate private LocalDateTime updatedAt;
 
   public abstract T toModel();
 }

@@ -15,18 +15,21 @@ import personalspring.domain.models.User;
 public class UserEntity extends BaseEntity<User> {
 
   @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
   private String username;
 
   @Column(nullable = false)
   private String email;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String token;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String bio;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String image;
 
   @Column(nullable = false)
@@ -35,6 +38,7 @@ public class UserEntity extends BaseEntity<User> {
   public UserEntity(User model) {
     this.setId(model.getId());
     this.username = model.getUsername();
+    this.name = model.getName();
     this.email = model.getEmail();
     this.token = model.getToken();
     this.bio = model.getBio();
@@ -48,6 +52,7 @@ public class UserEntity extends BaseEntity<User> {
   public User toModel() {
     return User.builder()
         .id(this.getId())
+        .name(this.getName())
         .username(this.username)
         .email(this.email)
         .token(this.token)
