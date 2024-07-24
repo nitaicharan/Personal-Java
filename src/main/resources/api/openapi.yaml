@@ -58,14 +58,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SignIn'
-            examples:
-              Example1:
-                value:
-                  email: johndoe@example.com
-                  password: P@ssw0rd1#
-      tags:
-        - post
-        - auth
+            examples: {}
   /signup:
     post:
       summary: ''
@@ -109,16 +102,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignUp'
-            examples:
-              Example1:
-                value:
-                  email: johndoe@example.com
-                  password: P@ssw0rd1#
-                  username: johndoe
-      tags:
-        - post
-        - auth
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: johndoe@example.com
+                password:
+                  type: string
+                  example: P@ssw0rd1#
+                username:
+                  type: string
+                  example: johndoe
+              required:
+                - email
+                - password
+                - username
+            examples: {}
   /tags:
     get:
       summary: ''
@@ -133,10 +132,7 @@ paths:
                 items:
                   type: string
                   example: demo
-              examples:
-                Example 1:
-                  value:
-                    - demo
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -171,9 +167,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: List resources
-      tags:
-        - users
-        - list
   /users:
     post:
       summary: ''
@@ -181,11 +174,6 @@ paths:
       responses:
         '201':
           description: Created
-          headers:
-            Location:
-              schema:
-                type: string
-              description: Location header of created model unique identifier
         '400':
           description: Bad Request
           content:
@@ -239,18 +227,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
-            examples:
-              Example 1:
-                value:
-                  name: John Doe
-                  username: johndoe
-                  email: johndoe@example.com
-                  bio: A software developer with a passion for coding and technology.
-                  image: 'https://example.com/johndoe.jpg'
+            examples: {}
       description: Create resource
-      tags:
-        - users
-        - post
     get:
       summary: ''
       operationId: users-list
@@ -260,22 +238,43 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  allOf:
-                    - $ref: '#/components/schemas/BaseEntity'
-                    - $ref: '#/components/schemas/User'
-              examples:
-                Example 1:
-                  value:
-                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      createdAt: '2019-08-24T14:15:22Z'
-                      updatedAt: '2019-08-24T14:15:22Z'
-                      name: John Doe
-                      username: johndoe
-                      email: johndoe@example.com
-                      bio: A software developer with a passion for coding and technology.
-                      image: 'https://example.com/johndoe.jpg'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        createdAt:
+                          type: string
+                          example: '2019-08-24T14:15:22Z'
+                        updatedAt:
+                          type: string
+                        name:
+                          type: string
+                        username:
+                          type: string
+                        email:
+                          type: string
+                        bio:
+                          type: string
+                        image:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_items:
+                        type: integer
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -310,14 +309,12 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: List resources
-      tags:
-        - users
-        - list
   '/users/{id}':
     parameters:
       - name: id
         in: path
         required: true
+        example: 7779541a-85c3-4865-83c3-5a2cfb04c67e
         schema:
           type: string
     get:
@@ -329,20 +326,33 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseEntity'
-                  - $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    createdAt: '2019-08-24T14:15:22Z'
-                    updatedAt: '2019-08-24T14:15:22Z'
-                    name: John Doe
-                    username: johndoe
-                    email: johndoe@example.com
-                    bio: A software developer with a passion for coding and technology.
-                    image: 'https://example.com/johndoe.jpg'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  createdAt:
+                    type: string
+                    example: '2019-08-24T14:15:22Z'
+                  updatedAt:
+                    type: string
+                    example: '2019-08-24T14:15:22Z'
+                  name:
+                    type: string
+                    example: John Doe
+                  username:
+                    type: string
+                    example: johndoe
+                  email:
+                    type: string
+                    example: johndoe@example.com
+                  bio:
+                    type: string
+                    example: A software developer with a passion for coding and technology.
+                  image:
+                    type: string
+                    example: 'https://example.com/johndoe.jpg'
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -388,9 +398,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: Find resource using URL path identifier
-      tags:
-        - users
-        - get
     patch:
       summary: ''
       operationId: users-patch
@@ -418,9 +425,6 @@ paths:
                       - field: age
                         issue: The 'age' field must be a number between 18 and 99.
       description: Edit resource using URL path identifier
-      tags:
-        - users
-        - patch
       requestBody:
         content:
           application/json:
@@ -513,9 +517,6 @@ paths:
                   value:
                     status: 500
                     message: An unexpected error occurred on the server.
-      tags:
-        - users
-        - delete
       description: Delete resource using URL path identifier
   /articles:
     post:
@@ -524,11 +525,6 @@ paths:
       responses:
         '201':
           description: Created
-          headers:
-            Location:
-              schema:
-                type: string
-              description: Location header of created model unique identifier
         '400':
           description: Bad Request
           content:
@@ -582,21 +578,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Article'
-            examples:
-              Example 1:
-                value:
-                  slug: Innovate-the-cross-platform-integration-for-API
-                  title: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
-                  description: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming
-                  body: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
-                  tagList:
-                    - value: demo
-                  favorited: true
-                  favoritesCount: 5
+            examples: {}
       description: Create resource
-      tags:
-        - users
-        - post
     get:
       summary: ''
       operationId: articles-list
@@ -606,23 +589,76 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseEntity'
-                  - $ref: '#/components/schemas/Article'
-              examples:
-                Example 1:
-                  value:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    createdAt: '2019-08-24T14:15:22Z'
-                    updatedAt: '2019-08-24T14:15:22Z'
-                    slug: Innovate-the-cross-platform-integration-for-API
-                    title: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
-                    description: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming
-                    body: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
-                    tagList:
-                      - value: demo
-                    favorited: true
-                    favoritesCount: 5
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        createdAt:
+                          type: string
+                          example: '2019-08-24T14:15:22Z'
+                        updatedAt:
+                          type: string
+                        slug:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        body:
+                          type: string
+                        tagList:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                        favorited:
+                          type: boolean
+                        favoritesCount:
+                          type: integer
+                  pagination:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                            name:
+                              type: string
+                            username:
+                              type: string
+                            email:
+                              type: string
+                            bio:
+                              type: string
+                            image:
+                              type: string
+                      pagination:
+                        type: object
+                        properties:
+                          limit:
+                            type: integer
+                          current_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+                          total_items:
+                            type: integer
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -657,14 +693,12 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: List resources
-      tags:
-        - users
-        - list
   '/articles/{id}':
     parameters:
       - name: id
         in: path
         required: true
+        example: 5fe007f4-7da2-4c0a-b7bc-9a05517fc2aa
         schema:
           type: string
     get:
@@ -678,23 +712,36 @@ paths:
               schema:
                 type: array
                 items:
-                  allOf:
-                    - $ref: '#/components/schemas/BaseEntity'
-                    - $ref: '#/components/schemas/Article'
-              examples:
-                Example 1:
-                  value:
-                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                      createdAt: '2019-08-24T14:15:22Z'
-                      updatedAt: '2019-08-24T14:15:22Z'
-                      slug: Innovate-the-cross-platform-integration-for-API
-                      title: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
-                      description: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming
-                      body: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
-                      tagList:
-                        - value: demo
-                      favorited: true
-                      favoritesCount: 5
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                    createdAt:
+                      type: string
+                      example: '2019-08-24T14:15:22Z'
+                    updatedAt:
+                      type: string
+                    slug:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    body:
+                      type: string
+                    tagList:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                    favorited:
+                      type: boolean
+                    favoritesCount:
+                      type: integer
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -740,9 +787,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: Find resource using URL path identifier
-      tags:
-        - users
-        - get
     patch:
       summary: ''
       operationId: articles-patch
@@ -770,9 +814,6 @@ paths:
                       - field: age
                         issue: The 'age' field must be a number between 18 and 99.
       description: Edit resource using URL path identifier
-      tags:
-        - patch
-        - articles
     delete:
       summary: ''
       operationId: articles-delete
@@ -853,9 +894,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: Delete resource using URL path identifier
-      tags:
-        - users
-        - delete
   /comments:
     post:
       summary: ''
@@ -863,11 +901,6 @@ paths:
       responses:
         '201':
           description: Created
-          headers:
-            Location:
-              schema:
-                type: string
-              description: Location header of created model unique identifier
         '400':
           description: Bad Request
           content:
@@ -921,14 +954,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Comment'
-            examples:
-              Example 1:
-                value:
-                  body: A software developer with a passion for open-source projects.
+            examples: {}
       description: Create resource
-      tags:
-        - users
-        - post
     get:
       summary: ''
       operationId: comments-list
@@ -938,26 +965,49 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseEntity'
-                  - type: object
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                        createdAt:
+                          type: string
+                          example: '2019-08-24T14:15:22Z'
+                        updatedAt:
+                          type: string
+                          example: '2019-08-24T14:15:22Z'
+                        author:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            username:
+                              type: string
+                            email:
+                              type: string
+                            bio:
+                              type: string
+                            image:
+                              type: string
+                        body:
+                          type: string
+                  pagination:
+                    type: object
                     properties:
-                      author:
-                        $ref: '#/components/schemas/User'
-                  - $ref: '#/components/schemas/Comment'
-              examples:
-                Example 1:
-                  value:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    createdAt: '2019-08-24T14:15:22Z'
-                    updatedAt: '2019-08-24T14:15:22Z'
-                    author:
-                      name: John Doe
-                      username: johndoe
-                      email: johndoe@example.com
-                      bio: A software developer with a passion for coding and technology.
-                      image: 'https://example.com/johndoe.jpg'
-                    body: A software developer with a passion for open-source projects.
+                      limit:
+                        type: integer
+                      current_page:
+                        type: integer
+                      total_pages:
+                        type: integer
+                      total_items:
+                        type: integer
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -992,14 +1042,12 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: List resources
-      tags:
-        - users
-        - list
   '/comment/{id}':
     parameters:
       - name: id
         in: path
         required: true
+        example: d5bc8f9f-ddbf-4d94-9731-19fd46c7e818
         schema:
           type: string
     get:
@@ -1011,16 +1059,21 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BaseEntity'
-                  - $ref: '#/components/schemas/Comment'
-              examples:
-                Example 1:
-                  value:
-                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    createdAt: '2019-08-24T14:15:22Z'
-                    updatedAt: '2019-08-24T14:15:22Z'
-                    body: A software developer with a passion for open-source projects.
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                  createdAt:
+                    type: string
+                    example: '2019-08-24T14:15:22Z'
+                  updatedAt:
+                    type: string
+                    example: '2019-08-24T14:15:22Z'
+                  body:
+                    type: string
+                    example: A software developer with a passion for open-source projects.
+              examples: {}
         '401':
           description: Unauthorized
           content:
@@ -1066,9 +1119,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: Find resource using URL path identifier
-      tags:
-        - users
-        - get
     patch:
       summary: ''
       operationId: comments-patch
@@ -1096,9 +1146,21 @@ paths:
                       - field: age
                         issue: The 'age' field must be a number between 18 and 99.
       description: Edit resource using URL path identifier
-      tags:
-        - patch
-        - articles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                createdAt:
+                  type: string
+                updatedAt:
+                  type: string
+                body:
+                  type: string
+            examples: {}
     delete:
       summary: ''
       operationId: comments-delete
@@ -1179,9 +1241,6 @@ paths:
                     status: 500
                     message: An unexpected error occurred on the server.
       description: Delete resource using URL path identifier
-      tags:
-        - users
-        - delete
 components:
   schemas:
     BaseEntity:
@@ -1189,93 +1248,51 @@ components:
       properties:
         id:
           type: string
-          format: uuid
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
         createdAt:
           type: string
-          format: date-time
           example: '2019-08-24T14:15:22Z'
         updatedAt:
           type: string
-          format: date-time
           example: '2019-08-24T14:15:22Z'
       required:
         - id
         - createdAt
         - updatedAt
-      x-examples:
-        Example 1:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-          createdAt: '2019-08-24T14:15:22Z'
-          updatedAt: '2019-08-24T14:15:22Z'
     User:
       type: object
       properties:
         name:
           type: string
           example: John Doe
-          minLength: 1
-          maxLength: 100
         username:
           type: string
-          maxLength: 36
-          minLength: 1
           example: johndoe
         email:
           type: string
-          format: email
-          maxLength: 254
-          minLength: 5
           example: johndoe@example.com
         bio:
           type: string
           example: A software developer with a passion for coding and technology.
-          maxLength: 100
         image:
           type: string
-          format: uri
           example: 'https://example.com/johndoe.jpg'
-          maxLength: 100
-          minLength: 5
       required:
         - name
         - username
         - email
-      x-examples:
-        Example 1:
-          name: John Doe
-          username: johndoe
-          email: johndoe@example.com
-          bio: A software developer with a passion for coding and technology.
-          image: 'https://example.com/johndoe.jpg'
     Article:
       type: object
-      x-examples:
-        Example 1:
-          slug: Innovate-the-cross-platform-integration-for-API
-          title: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
-          description: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming industries and everyday life.
-          body: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
-          tagList:
-            - value: demo
-          favorited: true
-          favoritesCount: 5
       properties:
         slug:
           type: string
           example: Innovate-the-cross-platform-integration-for-API
-          maxLength: 50
-          minLength: 1
         title:
           type: string
           example: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
-          minLength: 1
-          maxLength: 100
         description:
           type: string
           example: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming
-          minLength: 1
-          maxLength: 200
         body:
           type: string
           example: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
@@ -1299,53 +1316,44 @@ components:
       properties:
         email:
           type: string
-          maxLength: 254
-          minLength: 5
           example: johndoe@example.com
         password:
           type: string
-          format: password
           example: P@ssw0rd1#
-          maxLength: 50
-          minLength: 6
       required:
         - email
         - password
     SignUp:
       title: SignUp
-      allOf:
-        - $ref: '#/components/schemas/SignIn'
-        - type: object
-          properties:
-            username:
-              type: string
-              maxLength: 36
-              minLength: 1
-              example: johndoe
-          required:
-            - username
+      type: object
+      properties:
+        email:
+          type: string
+          example: johndoe@example.com
+        password:
+          type: string
+          example: P@ssw0rd1#
+        username:
+          type: string
+          example: johndoe
+      required:
+        - email
+        - password
+        - username
     Comment:
       type: object
       properties:
         body:
           type: string
           example: A software developer with a passion for open-source projects.
-          maxLength: 500
-          minLength: 1
       required:
         - body
     Tag:
       title: Tag
-      x-stoplight:
-        id: yf7j8x6nevflw
       type: object
       properties:
         value:
           type: string
-          x-stoplight:
-            id: 31wcm0gm2bp8a
-          maxLength: 20
-          minLength: 1
           example: demo
     ResponseError400:
       type: object
@@ -1427,13 +1435,3 @@ components:
                 type: string
               issue:
                 type: string
-tags:
-  - name: articles
-  - name: auth
-  - name: delete
-  - name: get
-  - name: list
-  - name: patch
-  - name: post
-  - name: update
-  - name: users
