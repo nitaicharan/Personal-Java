@@ -21,7 +21,6 @@ public abstract class BaseEntity<T> implements Serializable {
   private UUID id;
 
   @CreatedDate private LocalDateTime createdAt;
-
   @LastModifiedDate private LocalDateTime updatedAt;
 
   public abstract T toModel();

@@ -12,7 +12,7 @@ info:
     url: 'https://raw.githubusercontent.com/gothinkster/realworld/main/LICENSE'
     name: MIT license
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:8080'
 paths:
   /signin:
     post:
@@ -22,43 +22,18 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Sign in
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SignIn'
-            examples: {}
+        $ref: '#/components/requestBodies/SignIn'
+      tags:
+        - post
+        - auth
+      security: []
   /signup:
     post:
       summary: ''
@@ -67,371 +42,116 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Sign up
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: johndoe@example.com
-                password:
-                  type: string
-                  example: P@ssw0rd1#
-                username:
-                  type: string
-                  example: johndoe
-              required:
-                - email
-                - password
-                - username
-            examples: {}
+        $ref: '#/components/requestBodies/SignUp'
+      tags:
+        - post
+        - auth
+      security: []
+      parameters: []
   /tags:
     get:
       summary: ''
       operationId: tags-list
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-                  example: demo
-              examples: {}
+          $ref: '#/components/responses/TagList'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: List resources
+      tags:
+        - users
+        - list
   /users:
     post:
       summary: ''
       operationId: users-post
       responses:
         '201':
-          description: Created
+          description: ''
+          headers: {}
+          content: {}
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
+          $ref: '#/components/responses/ResponseError'
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              x-examples:
-                Example 1:
-                  name: John Doe
-                  username: johndoe
-                  email: johndoe@example.com
-                  bio: A software developer with a passion for coding and technology.
-                  image: 'https://example.com/johndoe.jpg'
-              properties:
-                name:
-                  type: string
-                  example: John Doe
-                username:
-                  type: string
-                  example: johndoe
-                email:
-                  type: string
-                  example: johndoe@example.com
-                bio:
-                  type: string
-                  example: A software developer with a passion for coding and technology.
-                image:
-                  type: string
-                  example: 'https://example.com/johndoe.jpg'
-                password:
-                  type: string
-                  x-stoplight:
-                    id: 3vuourcim10ae
-                  example: P@ssw0rd*1
-              required:
-                - name
-                - username
-                - email
-                - password
-            examples: {}
-        description: ''
+        $ref: '#/components/requestBodies/User'
       description: Create resource
+      tags:
+        - users
+        - post
+      parameters: []
+      x-internal: false
     get:
       summary: ''
       operationId: users-list
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        createdAt:
-                          type: string
-                          example: '2019-08-24T14:15:22Z'
-                        updatedAt:
-                          type: string
-                        name:
-                          type: string
-                        username:
-                          type: string
-                        email:
-                          type: string
-                        bio:
-                          type: string
-                        image:
-                          type: string
-                  pagination:
-                    type: object
-                    properties:
-                      limit:
-                        type: integer
-                      current_page:
-                        type: integer
-                      total_pages:
-                        type: integer
-                      total_items:
-                        type: integer
-              examples: {}
+          $ref: '#/components/responses/UserList'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: List resources
+      tags:
+        - users
+        - list
+      parameters:
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+      security: []
+    parameters: []
   '/users/{id}':
     parameters:
-      - name: id
-        in: path
-        required: true
-        example: 7779541a-85c3-4865-83c3-5a2cfb04c67e
-        schema:
-          type: string
+      - $ref: '#/components/parameters/id'
     get:
       summary: ''
       operationId: users-get
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  createdAt:
-                    type: string
-                    example: '2019-08-24T14:15:22Z'
-                  updatedAt:
-                    type: string
-                    example: '2019-08-24T14:15:22Z'
-                  name:
-                    type: string
-                    example: John Doe
-                  username:
-                    type: string
-                    example: johndoe
-                  email:
-                    type: string
-                    example: johndoe@example.com
-                  bio:
-                    type: string
-                    example: A software developer with a passion for coding and technology.
-                  image:
-                    type: string
-                    example: 'https://example.com/johndoe.jpg'
-              examples: {}
+          $ref: '#/components/responses/UserEntity'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Find resource using URL path identifier
+      tags:
+        - users
+        - get
+      security: []
     patch:
       summary: ''
       operationId: users-patch
@@ -439,39 +159,21 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
+        '401':
+          $ref: '#/components/responses/ResponseError'
+        '403':
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
+        '500':
+          description: Internal Server Error
       description: Edit resource using URL path identifier
+      tags:
+        - users
+        - patch
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-            examples:
-              Example1:
-                value:
-                  name: John Doe
-                  username: johndoe
-                  email: johndoe@example.com
-                  bio: A software developer with a passion for coding and technology.
-                  image: 'https://example.com/johndoe.jpg'
+        $ref: '#/components/requestBodies/User'
     delete:
       summary: ''
       operationId: users-delete
@@ -479,78 +181,18 @@ paths:
         '204':
           description: No Content
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
+      tags:
+        - users
+        - delete
       description: Delete resource using URL path identifier
   /articles:
     post:
@@ -559,268 +201,72 @@ paths:
       responses:
         '201':
           description: Created
+          headers: {}
+          content: {}
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
+          $ref: '#/components/responses/ResponseError'
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Article'
-            examples: {}
+        $ref: '#/components/requestBodies/Article'
       description: Create resource
+      tags:
+        - users
+        - post
     get:
       summary: ''
       operationId: articles-list
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        createdAt:
-                          type: string
-                          example: '2019-08-24T14:15:22Z'
-                        updatedAt:
-                          type: string
-                        slug:
-                          type: string
-                        title:
-                          type: string
-                        description:
-                          type: string
-                        body:
-                          type: string
-                        tagList:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              value:
-                                type: string
-                        favorited:
-                          type: boolean
-                        favoritesCount:
-                          type: integer
-                  pagination:
-                    type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            createdAt:
-                              type: string
-                            updatedAt:
-                              type: string
-                            name:
-                              type: string
-                            username:
-                              type: string
-                            email:
-                              type: string
-                            bio:
-                              type: string
-                            image:
-                              type: string
-                      pagination:
-                        type: object
-                        properties:
-                          limit:
-                            type: integer
-                          current_page:
-                            type: integer
-                          total_pages:
-                            type: integer
-                          total_items:
-                            type: integer
-              examples: {}
+          $ref: '#/components/responses/ArticleList'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: List resources
+      tags:
+        - users
+        - list
+      parameters:
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+      security: []
   '/articles/{id}':
     parameters:
-      - name: id
-        in: path
-        required: true
-        example: 5fe007f4-7da2-4c0a-b7bc-9a05517fc2aa
-        schema:
-          type: string
+      - $ref: '#/components/parameters/id'
     get:
       summary: ''
       operationId: articles-get
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    createdAt:
-                      type: string
-                      example: '2019-08-24T14:15:22Z'
-                    updatedAt:
-                      type: string
-                    slug:
-                      type: string
-                    title:
-                      type: string
-                    description:
-                      type: string
-                    body:
-                      type: string
-                    tagList:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                    favorited:
-                      type: boolean
-                    favoritesCount:
-                      type: integer
-              examples: {}
+          $ref: '#/components/responses/ArticleEntity'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Find resource using URL path identifier
+      tags:
+        - users
+        - get
+      security: []
     patch:
       summary: ''
       operationId: articles-patch
@@ -828,26 +274,15 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
       description: Edit resource using URL path identifier
+      tags:
+        - patch
+        - articles
+      requestBody:
+        $ref: '#/components/requestBodies/Article'
     delete:
       summary: ''
       operationId: articles-delete
@@ -855,79 +290,19 @@ paths:
         '204':
           description: No Content
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Delete resource using URL path identifier
+      tags:
+        - users
+        - delete
   /comments:
     post:
       summary: ''
@@ -935,224 +310,69 @@ paths:
       responses:
         '201':
           description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: Location header of created model unique identifier
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
+          $ref: '#/components/responses/ResponseError'
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Comment'
-            examples: {}
+        $ref: '#/components/requestBodies/Comment'
       description: Create resource
+      tags:
+        - users
+        - post
     get:
       summary: ''
       operationId: comments-list
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                        createdAt:
-                          type: string
-                          example: '2019-08-24T14:15:22Z'
-                        updatedAt:
-                          type: string
-                          example: '2019-08-24T14:15:22Z'
-                        author:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                            username:
-                              type: string
-                            email:
-                              type: string
-                            bio:
-                              type: string
-                            image:
-                              type: string
-                        body:
-                          type: string
-                  pagination:
-                    type: object
-                    properties:
-                      limit:
-                        type: integer
-                      current_page:
-                        type: integer
-                      total_pages:
-                        type: integer
-                      total_items:
-                        type: integer
-              examples: {}
+          $ref: '#/components/responses/CommentList'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: List resources
+      tags:
+        - users
+        - list
+      parameters:
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
   '/comment/{id}':
     parameters:
-      - name: id
-        in: path
-        required: true
-        example: d5bc8f9f-ddbf-4d94-9731-19fd46c7e818
-        schema:
-          type: string
+      - $ref: '#/components/parameters/id'
     get:
       summary: ''
       operationId: comments-get
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                  createdAt:
-                    type: string
-                    example: '2019-08-24T14:15:22Z'
-                  updatedAt:
-                    type: string
-                    example: '2019-08-24T14:15:22Z'
-                  body:
-                    type: string
-                    example: A software developer with a passion for open-source projects.
-              examples: {}
+          $ref: '#/components/responses/CommentEntity'
+        '400':
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError401'
-              examples:
-                Example1:
-                  value:
-                    status: 401
-                    message: Authentication required
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Find resource using URL path identifier
+      tags:
+        - users
+        - get
     patch:
       summary: ''
       operationId: comments-patch
@@ -1160,173 +380,143 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
+        '404':
+          $ref: '#/components/responses/ResponseError'
       description: Edit resource using URL path identifier
+      tags:
+        - patch
+        - articles
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                createdAt:
-                  type: string
-                updatedAt:
-                  type: string
-                body:
-                  type: string
-            examples: {}
+        $ref: '#/components/requestBodies/Comment'
     delete:
       summary: ''
       operationId: comments-delete
       responses:
         '204':
           description: No Content
+          content: {}
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError400'
-              examples:
-                Example1:
-                  value:
-                    status: 400
-                    message: Validation errors occurred
-                    details:
-                      - field: username
-                        issue: The 'username' field must be between 3 and 20 characters long.
-                      - field: email
-                        issue: The 'email' field must be a valid email address.
-                      - field: password
-                        issue: 'The ''password'' field must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.'
-                      - field: age
-                        issue: The 'age' field must be a number between 18 and 99.
+          $ref: '#/components/responses/ResponseError'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError403'
-              examples:
-                Example1:
-                  value:
-                    status: 403
-                    message: You do not have permission to access this resource.
+          $ref: '#/components/responses/ResponseError'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError404'
-              examples:
-                Example1:
-                  value:
-                    status: 404
-                    message: The requested resource was not found.
+          $ref: '#/components/responses/ResponseError'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError500'
-              examples:
-                Example1:
-                  value:
-                    status: 500
-                    message: An unexpected error occurred on the server.
+          $ref: '#/components/responses/ResponseError'
       description: Delete resource using URL path identifier
+      tags:
+        - users
+        - delete
 components:
   schemas:
     BaseEntity:
       type: object
+      x-examples: {}
       properties:
         id:
           type: string
-          example: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          format: uuid
         createdAt:
           type: string
-          example: '2019-08-24T14:15:22Z'
+          format: date-time
         updatedAt:
           type: string
-          example: '2019-08-24T14:15:22Z'
+          format: date-time
       required:
         - id
         - createdAt
         - updatedAt
+    Pagination:
+      title: Pagination
+      x-stoplight:
+        id: icmrnesjmetu3
+      type: object
+      x-examples: {}
+      properties:
+        offset:
+          type: integer
+          x-stoplight:
+            id: 2av3litdqr1sc
+          minimum: 0
+          default: 0
+        page:
+          type: integer
+          x-stoplight:
+            id: 60kdo2v5i26ba
+          default: 1
+          minimum: 1
+        limit:
+          type: integer
+          x-stoplight:
+            id: 8wfqg4ashis34
+          default: 10
+          minimum: 10
+          maximum: 100
+        pages:
+          type: integer
+          x-stoplight:
+            id: rl7hu7gmb4tm5
+          default: 1
+          minimum: 1
+      required:
+        - offset
+        - page
+        - limit
+        - pages
     User:
       type: object
+      x-examples: {}
       properties:
         name:
           type: string
-          example: John Doe
+          minLength: 1
+          maxLength: 100
         username:
           type: string
-          example: johndoe
+          maxLength: 50
+          minLength: 1
+          description: Unique value
+          pattern: '^[a-zA-Z][a-zA-Z0-9_]*$'
         email:
           type: string
-          example: johndoe@example.com
+          format: email
+          description: Unique value
+          minLength: 5
+          maxLength: 100
         bio:
           type: string
-          example: A software developer with a passion for coding and technology.
+          maxLength: 500
+          nullable: true
         image:
           type: string
-          example: 'https://example.com/johndoe.jpg'
+          format: uri
+          nullable: true
       required:
         - name
         - username
         - email
     Article:
       type: object
+      x-examples: {}
       properties:
         slug:
           type: string
-          example: Innovate-the-cross-platform-integration-for-API
+          maxLength: 50
+          minLength: 1
+          pattern: '^[a-zA-Z][a-zA-Z0-9_]*$'
         title:
           type: string
           example: 'Leveraging AI to Transform Data Analytics: Innovative Strategies for Enhanced Decision-Making'
+          minLength: 1
+          maxLength: 100
         description:
           type: string
           example: Explore the groundbreaking advancements in machine learning that are driving the future of artificial intelligence. Delve into innovative algorithms and applications transforming
+          minLength: 1
+          maxLength: 200
         body:
           type: string
           example: 'In recent years, the field of artificial intelligence (AI) has seen significant advancements, transforming various industries and our daily lives. From healthcare to finance, AI applications are enhancing efficiency, accuracy, and decision-making processes. Machine learning, a subset of AI, plays a crucial role in this transformation. By leveraging large datasets, machine learning algorithms can identify patterns, make predictions, and even improve over time without explicit programming.  One notable example is the use of AI in healthcare. AI-powered systems can analyze medical images with remarkable precision, assisting doctors in diagnosing diseases like cancer at an early stage. In finance, AI algorithms are revolutionizing trading strategies, risk management, and fraud detection, leading to more secure and efficient financial systems.  Moreover, AI is making strides in natural language processing (NLP), enabling more sophisticated human-computer interactions. Virtual assistants like Siri and Alexa, powered by NLP, are becoming integral parts of our lives, helping us with tasks ranging from setting reminders to controlling smart home devices.'
@@ -1338,7 +528,8 @@ components:
           type: boolean
         favoritesCount:
           type: integer
-          example: 5
+          default: 0
+          minimum: 0
       required:
         - slug
         - title
@@ -1347,125 +538,341 @@ components:
     SignIn:
       title: SignIn
       type: object
+      x-examples: {}
       properties:
         email:
           type: string
-          example: johndoe@example.com
+          maxLength: 254
+          minLength: 5
+          format: email
         password:
           type: string
-          example: P@ssw0rd1#
+          format: password
+          maxLength: 50
+          minLength: 6
       required:
         - email
         - password
     SignUp:
       title: SignUp
-      type: object
-      properties:
-        email:
-          type: string
-          example: johndoe@example.com
-        password:
-          type: string
-          example: P@ssw0rd1#
-        username:
-          type: string
-          example: johndoe
-      required:
-        - email
-        - password
-        - username
+      allOf:
+        - $ref: '#/components/schemas/SignIn'
+        - type: object
+          properties:
+            username:
+              type: string
+              maxLength: 36
+              minLength: 1
+              pattern: '^[a-z][a-z0-9_]*$'
+          required:
+            - username
     Comment:
       type: object
       properties:
         body:
           type: string
-          example: A software developer with a passion for open-source projects.
+          maxLength: 500
+          minLength: 1
       required:
         - body
     Tag:
       title: Tag
+      x-stoplight:
+        id: q6rh3euw1b16j
+      type: string
+      x-examples: {}
+      pattern: '^[a-z][a-z0-9_]*$'
+      maxLength: 100
+      minLength: 1
+    ResponseError:
       type: object
+      x-stoplight:
+        id: pu7ozc4hb0ns0
+      x-examples: {}
       properties:
-        value:
+        status:
+          type: integer
+          enum:
+            - 500
+            - 404
+            - 403
+            - 401
+            - 400
+        message:
           type: string
-          example: demo
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                example: email
+              issue:
+                type: string
+                example: Email should be a email
+            required:
+              - field
+              - issue
+      required:
+        - status
+        - message
+  responses:
+    UserEntity:
+      description: User entity response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseEntity'
+              - $ref: '#/components/schemas/User'
+          examples:
+            Example 1:
+              $ref: '#/components/examples/UserEntity'
+    ResponseError:
+      description: Response error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            '400':
+              $ref: '#/components/examples/ResponseError400'
+            '401':
+              $ref: '#/components/examples/ResponseError401'
+            '403':
+              $ref: '#/components/examples/ResponseError403'
+            '404':
+              $ref: '#/components/examples/ResponseError404'
+            '500':
+              $ref: '#/components/examples/ResponseError500'
+    UserList:
+      description: User list response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/BaseEntity'
+                    - $ref: '#/components/schemas/User'
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            required:
+              - data
+              - pagination
+          examples:
+            Example 1:
+              $ref: '#/components/examples/UserList'
+    ArticleList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - x-stoplight:
+                  id: vyq16skcnim3h
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: emum9h6006f33
+                    items:
+                      x-stoplight:
+                        id: bfwdjb7btu3uz
+                      allOf:
+                        - $ref: '#/components/schemas/BaseEntity'
+                        - $ref: '#/components/schemas/Article'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                required:
+                  - data
+                  - pagination
+            type: object
+          examples: {}
+    ArticleEntity:
+      description: Article entity response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseEntity'
+              - $ref: '#/components/schemas/Article'
+    CommentEntity:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BaseEntity'
+              - $ref: '#/components/schemas/Comment'
+    CommentList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                x-stoplight:
+                  id: kl45c3tfzftrn
+                items:
+                  x-stoplight:
+                    id: bdd5g6n1g6jey
+                  allOf:
+                    - $ref: '#/components/schemas/BaseEntity'
+                    - $ref: '#/components/schemas/Comment'
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+    TagList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tag'
+          examples:
+            Example 1:
+              $ref: '#/components/examples/TagList'
+  parameters:
+    id:
+      name: id
+      in: path
+      schema:
+        type: string
+        format: uuid
+      description: Entity indentifier
+      required: true
+    offset:
+      name: offset
+      in: query
+      schema:
+        type: number
+        minimum: 0
+      description: Pagination offset
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: number
+        minimum: 1
+        maximum: 100
+      description: Pagination limit
+  examples:
+    UserList:
+      value:
+        data:
+          - id: 8e5e5579-71b9-b6e4-1981-25deb7193c58
+            createdAt: '1991-01-24T00:00:00.0Z'
+            updatedAt: '2007-08-13T23:00:00.0Z'
+            name: consectetur
+            username: OBLI
+            email: U53WPN5veXZ@EevETTGnoEKslZu.pumt
+            image: 'https://vjvlzYKaxKTrDAERUoMPGNckWQWpob.buXV9bc5iSSm+PGp46UJwVEUdRVCftC+OPTT+5Ok4hC-zqZRD4nYMt52hCs'
+            bio: esse
+        pagination:
+          limit: 17
+          offset: 58731375
+          page: 74522413
+          pages: 16885263
+    UserEntity:
+      value:
+        bio: laboris
+        createdAt: '1967-03-12T23:00:00.0Z'
+        email: Mm5Xi7@UVtNzNK.qes
+        id: 4b3d6d14-3781-66a1-edda-04ac41fc6d1f
+        image: 'https://jGhuxbAxaNoWyDx.fwVDEG.tXDoirhM25ZcDRtLo5ILWYLRRcsQm4PSaYoVHlkTQfUK5BhkyeJG4c+'
+        name: ex id sint
+        updatedAt: '1996-09-22T23:00:00.0Z'
+        username: Ao9
+    TagList:
+      value:
+        - yzuakkrq
+    SignIn:
+      value:
+        email: johndoe@example.com
+        password: P@ssw0rd1#
+    SignUp:
+      value:
+        email: user@example.com
+        password: pa$$word
+        username: string
     ResponseError400:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
+      value:
+        status: 400
+        message: Bad Request
         details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-              issue:
-                type: string
-    ResponseError401:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-              issue:
-                type: string
-    ResponseError403:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-              issue:
-                type: string
-    ResponseError404:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-              issue:
-                type: string
+          - field: email
+            issue: Email should be a email
     ResponseError500:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
+      value:
+        status: 500
+        message: Internal Server Error
+    ResponseError401:
+      value:
+        status: 401
+        message: Unauthorized
         details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-              issue:
-                type: string
+          - field: authorization
+            issue: Token is missing or invalid
+    ResponseError403:
+      value:
+        status: 403
+        message: Forbidden
+        details:
+          - field: access
+            issue: User does not have the necessary permissions
+    ResponseError404:
+      value:
+        status: 404
+        message: Not Found
+  securitySchemes: {}
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+          examples: {}
+    Article:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Article'
+    Comment:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Comment'
+    SignIn:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignIn'
+          examples:
+            Example 1:
+              $ref: '#/components/examples/SignIn'
+    SignUp:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignUp'
+          examples:
+            Example 1:
+              $ref: '#/components/examples/SignUp'
+tags:
+  - name: articles
+  - name: auth
+  - name: delete
+  - name: get
+  - name: list
+  - name: patch
+  - name: post
+  - name: update
+  - name: users

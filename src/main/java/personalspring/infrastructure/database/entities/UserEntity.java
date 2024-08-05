@@ -14,38 +14,33 @@ import personalspring.domain.models.User;
 @Entity(name = "users")
 public class UserEntity extends BaseEntity<User> {
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 100)
   private String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 50)
   private String username;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 100)
   private String email;
 
-  @Column(nullable = true)
-  private String token;
-
-  @Column(nullable = true)
+  @Column(nullable = true, length = 500)
   private String bio;
 
-  @Column(nullable = true)
+  @Column(nullable = true, length = 2000)
   private String image;
-
-  @Column(nullable = false)
-  private String password;
 
   public UserEntity(User model) {
     this.setId(model.getId());
     this.username = model.getUsername();
     this.name = model.getName();
     this.email = model.getEmail();
-    this.token = model.getToken();
     this.bio = model.getBio();
-    this.image = model.getImage();
-    this.password = model.getPassword();
     this.setCreatedAt(model.getCreatedAt());
     this.setUpdatedAt(model.getUpdatedAt());
+
+    if (model.getImage() != null) {
+      this.image = model.getImage().toString();
+    }
   }
 
   @Override
@@ -55,10 +50,8 @@ public class UserEntity extends BaseEntity<User> {
         .name(this.getName())
         .username(this.username)
         .email(this.email)
-        .token(this.token)
         .bio(this.bio)
         .image(this.image)
-        .password(this.password)
         .createdAt(this.getCreatedAt())
         .updatedAt(this.getUpdatedAt())
         .build();

@@ -1,39 +1,21 @@
 package personalspring.infrastructure.database.implementations;
 
-import java.util.List;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import personalspring.domain.models.User;
-import personalspring.domain.repositories.IUserRepository;
+import personalspring.domain.persistenceis.IUserPersistency;
 import personalspring.infrastructure.database.entities.UserEntity;
-import personalspring.infrastructure.database.interfaces.IUserPersister;
+import personalspring.infrastructure.database.interfaces.IUserRepository;
 
 @Repository
-@AllArgsConstructor
-public class UserRepositoryImp implements IUserRepository {
-  private IUserPersister persister;
+public class UserRepositoryImp extends BaseRepositoryImpl<User, UserEntity>
+    implements IUserPersistency {
 
-  @Override
-  public User create(User model) {
-    var entity = new UserEntity(model);
-
-    var savedEntity = this.persister.save(entity);
-    return savedEntity.toModel();
+  UserRepositoryImp(IUserRepository repository) {
+    super(repository);
   }
 
   @Override
-  public List<User> list() {
-    var entities = persister.findAll();
-    return entities.stream().map(UserEntity::toModel).toList();
-  }
-
-  @Override
-  public User findByUsername(String identifier) {
-    return persister.findByUsername(identifier).map(UserEntity::toModel).orElse(null);
-  }
-
-  @Override
-  public void deleteByUsername(String identifier) {
-    persister.deleteByUsername(identifier);
+  public UserEntity fromModel(User model) {
+    return new UserEntity(model);
   }
 }

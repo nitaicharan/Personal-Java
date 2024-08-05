@@ -1,39 +1,20 @@
 package personalspring.infrastructure.database.implementations;
 
-import java.util.List;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import personalspring.domain.models.Article;
-import personalspring.domain.repositories.IArticleRepository;
+import personalspring.domain.persistenceis.IArticlePersistency;
 import personalspring.infrastructure.database.entities.ArticleEntity;
-import personalspring.infrastructure.database.interfaces.IArticlePersister;
+import personalspring.infrastructure.database.interfaces.IArticleRepository;
 
 @Repository
-@AllArgsConstructor
-public class ArticleRepositoryImp implements IArticleRepository {
-  private IArticlePersister persister;
-
-  @Override
-  public Article create(Article model) {
-    var entity = new ArticleEntity(model);
-
-    var savedEntity = this.persister.save(entity);
-    return savedEntity.toModel();
+public class ArticleRepositoryImp extends BaseRepositoryImpl<Article, ArticleEntity>
+    implements IArticlePersistency {
+  public ArticleRepositoryImp(IArticleRepository persister) {
+    super(persister);
   }
 
   @Override
-  public List<Article> list() {
-    var entities = persister.findAll();
-    return entities.stream().map(ArticleEntity::toModel).toList();
-  }
-
-  @Override
-  public Article findBySlug(String slug) {
-    return persister.findBySlug(slug).map(ArticleEntity::toModel).orElse(null);
-  }
-
-  @Override
-  public void deleteBySlug(String slug) {
-    persister.deleteBySlug(slug);
+  public ArticleEntity fromModel(Article model) {
+    return new ArticleEntity(model);
   }
 }

@@ -1,24 +1,29 @@
 package personalspring.application.use_cases.users;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import personalspring.application.use_cases.base.CreateBaseUsecase;
 import personalspring.domain.models.User;
-import personalspring.domain.repositories.IUserRepository;
+import personalspring.domain.persistenceis.IUserPersistency;
 
 @Service
 @AllArgsConstructor
-public class CreateUserUseCase {
-  private final IUserRepository repository;
+public class CreateUserUseCase extends CreateBaseUsecase<User> {
+  private final IUserPersistency repository;
 
-  public String execute(User model) {
-    var entity = repository.create(model);
-
-    if (entity == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
+  public UUID execute(User model) {
+    if (model == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
-    return entity.getUsername();
+    try {
+      var saved = repository.create(model);
+      return saved.getId();
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
   }
 }

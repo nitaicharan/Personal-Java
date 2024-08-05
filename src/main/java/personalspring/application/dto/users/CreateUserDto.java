@@ -20,6 +20,6 @@ public class CreateUserDto {
   @NotBlank private String password;
 
   public User toModel() {
-    return User.builder().username(this.username).email(this.email).password(this.password).build();
+    return User.builder().username(this.username).email(this.email).build();
   }
 }
